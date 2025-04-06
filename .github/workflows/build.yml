@@ -2,28 +2,33 @@ name: Build dylib
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: macos-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      # 1. Repository auschecken
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Theos
-      run: |
-        git clone --recursive https://github.com/theos/theos.git $HOME/theos
-        echo "export THEOS=$HOME/theos" >> $GITHUB_ENV
+      # 2. Theos einrichten
+      - name: Set up Theos
+        run: |
+          git clone --recursive https://github.com/theos/theos.git $HOME/theos
+          echo "export THEOS=$HOME/theos" >> $GITHUB_ENV
 
-    - name: Build .dylib
-      run: |
-        export THEOS=$HOME/theos
-        make
+      # 3. .dylib bauen
+      - name: Build .dylib
+        run: |
+          export THEOS=$HOME/theos
+          make
 
-    - name: Upload dylib
-      uses: actions/upload-artifact@v2
-      with:
-        name: WarzoneHack
-        path: WarzoneHack.dylib
+      # 4. Artefakt hochladen
+      - name: Upload dylib
+        uses: actions/upload-artifact@v2
+        with:
+          name: WarzoneHack
+          path: ./WarzoneHack.dylib
