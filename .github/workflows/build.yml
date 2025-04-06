@@ -9,7 +9,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - name: Checkout
+    - name: Checkout repository
       uses: actions/checkout@v2
 
     - name: Set up Theos
@@ -23,7 +23,7 @@ jobs:
         make
 
     - name: Upload dylib
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v2
       with:
         name: WarzoneHack
-        path: ./*.dylib
+        path: ./WarzoneHack.dylib
