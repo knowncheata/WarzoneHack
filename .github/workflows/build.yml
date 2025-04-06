@@ -1,0 +1,29 @@
+name: Build dylib
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Theos
+      run: |
+        git clone --recursive https://github.com/theos/theos.git $HOME/theos
+        echo "export THEOS=$HOME/theos" >> $GITHUB_ENV
+
+    - name: Build .dylib
+      run: |
+        export THEOS=$HOME/theos
+        make
+
+    - name: Upload dylib
+      uses: actions/upload-artifact@v3
+      with:
+        name: WarzoneHack
+        path: ./*.dylib
