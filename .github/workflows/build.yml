@@ -25,16 +25,16 @@ jobs:
         run: |
           export THEOS=$HOME/theos
           make
-          ls -l  # Debugging: Listet alle Dateien auf
+          ls -l  # Alle Dateien im Verzeichnis auflisten, damit wir sehen können, welche erstellt wurden
 
-      # 4. Überprüfen, ob die .dylib-Datei erstellt wurde
-      - name: Verify .dylib
+      # 4. Sicherstellen, dass .dylib tatsächlich existiert
+      - name: Verify .dylib existence
         run: |
           if [ ! -f "./WarzoneHack.dylib" ]; then
-            echo "Error: WarzoneHack.dylib not found!"
+            echo "Fehler: WarzoneHack.dylib wurde nicht gefunden!"
             exit 1
           fi
-          echo "WarzoneHack.dylib found successfully."
+          echo "WarzoneHack.dylib wurde erfolgreich erstellt."
 
       # 5. Artefakt hochladen
       - name: Upload dylib
